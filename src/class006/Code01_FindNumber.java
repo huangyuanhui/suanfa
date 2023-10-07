@@ -43,7 +43,13 @@ public class Code01_FindNumber {
 		return false;
 	}
 
-	// 保证arr有序，才能用这个方法
+	/**
+	 * 二分搜索：
+	 * 保证arr有序，才能用这个方法
+	 * @param arr
+	 * @param num
+	 * @return
+	 */
 	public static boolean exist(int[] arr, int num) {
 		if (arr == null || arr.length == 0) {
 			return false;
