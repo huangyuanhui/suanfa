@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 // 一开始你在最左上角的格子 (0, 0) ，且你希望去最右下角的格子 (rows-1, columns-1) 
 // （注意下标从 0 开始编号）。你每次可以往 上，下，左，右 四个方向之一移动
 // 你想要找到耗费 体力 最小的一条路径
-// 一条路径耗费的 体力值 是路径上相邻格子之间 高度差绝对值 的 最大值 决定的
+// 一条路径耗费的体力值是路径上，相邻格子之间高度差绝对值的最大值
 // 请你返回从左上角走到右下角的最小 体力消耗值
 // 测试链接 ：https://leetcode.cn/problems/path-with-minimum-effort/
 public class Code02_PathWithMinimumEffort {
@@ -17,6 +17,8 @@ public class Code02_PathWithMinimumEffort {
 	public static int[] move = new int[] { -1, 0, 1, 0, -1 };
 
 	public int minimumEffortPath(int[][] heights) {
+		// (0,0)源点
+		// -> (x,y)
 		int n = heights.length;
 		int m = heights[0].length;
 		int[][] distance = new int[n][m];
@@ -27,6 +29,9 @@ public class Code02_PathWithMinimumEffort {
 		}
 		distance[0][0] = 0;
 		boolean[][] visited = new boolean[n][m];
+		// 0 : 格子的行
+		// 1 : 格子的列
+		// 2 : 源点到当前格子的代价
 		PriorityQueue<int[]> heap = new PriorityQueue<int[]>((a, b) -> a[2] - b[2]);
 		heap.add(new int[] { 0, 0, 0 });
 		while (!heap.isEmpty()) {
@@ -38,6 +43,9 @@ public class Code02_PathWithMinimumEffort {
 				continue;
 			}
 			if (x == n - 1 && y == m - 1) {
+				// 常见剪枝
+				// 发现终点直接返回
+				// 不用等都结束
 				return c;
 			}
 			visited[x][y] = true;
@@ -47,6 +55,7 @@ public class Code02_PathWithMinimumEffort {
 				if (nx >= 0 && nx < n && ny >= 0 && ny < m && !visited[nx][ny]) {
 					int nc = Math.max(c, Math.abs(heights[x][y] - heights[nx][ny]));
 					if (nc < distance[nx][ny]) {
+						distance[nx][ny] = nc;
 						heap.add(new int[] { nx, ny, nc });
 					}
 				}
