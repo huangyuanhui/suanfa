@@ -2,12 +2,18 @@ package class015;
 
 import java.util.Stack;
 
-// 最小栈
+/**
+ * 最小栈
+ * 获取栈中最小数据
+ * 思路：准备一个记录最小值的栈，
+ *
+ */
 // 测试链接 : https://leetcode.cn/problems/min-stack/
 public class GetMinStack {
     class MinStack3 {
 
         private Stack<Integer> dataStack;
+
         private Stack<Integer> minStack;
 
         public MinStack3() {
@@ -15,6 +21,11 @@ public class GetMinStack {
             minStack = new Stack<>();
         }
 
+        /**
+         * 数据入栈，同时记录栈最小值，
+         * 当入栈数据小于最小栈栈顶数据，最小栈栈顶数据重复入最小栈！
+         * @param val
+         */
         public void push(int val) {
             dataStack.push(val);
             if (minStack.empty() || val < minStack.peek()) {
@@ -24,6 +35,9 @@ public class GetMinStack {
             }
         }
 
+        /**
+         * 数据出栈
+         */
         public void pop() {
             dataStack.pop();
             minStack.pop();

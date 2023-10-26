@@ -3,6 +3,9 @@ package class016;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * 双端队列：可以从头部进 头部出；也可以从尾部进 尾部出
+ */
 // 设计循环双端队列
 // 测试链接 : https://leetcode.cn/problems/design-circular-deque/
 public class CircularDeque {
@@ -285,12 +288,15 @@ public class CircularDeque {
     }
 
 
+    /**
+     * 数组实现双端队列数据结构
+     */
     class CircularQueue {
         // 数组模拟双端队列
         private int[] queue;
-        // 左端
+        // 队列左端指针
         private int left;
-        // 右端
+        // 队列右端指针
         private int right;
         // 队列元素长度
         private int size;
@@ -343,7 +349,7 @@ public class CircularDeque {
         }
 
         /**
-         * 头部加入
+         * 头部加入（left端）
          *
          * @param value
          * @return
@@ -356,7 +362,9 @@ public class CircularDeque {
             if (isEmpty()) {
                 left = 0;
                 right = 0;
-            } else {
+            }
+            // 否则，确定头指针left
+            else {
                 left = left == 0 ? limit - 1 : left - 1;
             }
             queue[left] = value;
@@ -364,13 +372,21 @@ public class CircularDeque {
             return true;
         }
 
+        /**
+         * 尾部加入（right端）
+         * @param value
+         * @return
+         */
         public boolean insertLast(int value) {
             if (isFull()) {
                 return false;
             }
+            // 队列空，left、right回到0位置
             if (isEmpty()) {
                 left = right = 0;
-            } else {
+            }
+            // 否则，确定尾指针right
+            else {
                 right = right == limit - 1 ? 0 : right + 1;
             }
             queue[right] = value;
@@ -378,6 +394,10 @@ public class CircularDeque {
             return true;
         }
 
+        /**
+         * 头部出（left端）
+         * @return
+         */
         public boolean deleteFront() {
             if (isEmpty()) {
                 return false;
@@ -387,6 +407,10 @@ public class CircularDeque {
             return true;
         }
 
+        /**
+         * 尾部出（right端）
+         * @return
+         */
         public boolean deleteLast() {
             if (isEmpty()) {
                 return false;

@@ -2,10 +2,11 @@ package class017;
 
 /**
  * 二叉树三序遍历递归实现
+ * 递归的思想：想象把递归的方法入方法栈中去想象
  * <p>
- * 针对于中节点：树中即任何一颗子树都满足
+ * 针对于中节点：对树中即任何一颗子树都满足：
  * <p>
- * 前序：中 左 右
+ * 先序：中 左 右
  * <p>
  * 中序：左 中 右
  * <p>
@@ -36,8 +37,11 @@ public class BinaryTreeTraversalRecursion {
         if (head == null) {
             return;
         }
+        // 打印自己
         System.out.print(head.val + " ");
+        // 遍历我的左树
         preventOrder(head.left);
+        // 遍历我的右树
         preventOrder(head.right);
     }
 

@@ -6,9 +6,11 @@ import java.util.Stack;
 
 /**
  * 用栈实现队列
- * 用两个栈实现队列
- * 出栈空的时候，才能继续从入栈倒数据
- * 入栈倒数据就要一次性都倒完
+ * 用两个栈实现队列（用两个栈结构实现先入先出队列）
+ * <p>
+ * 核心思想：
+ * 1：出栈空的时候，才能继续从入栈倒数据
+ * 2：入栈倒数据就要一次性都倒完
  */
 // 用队列实现栈
 public class ConvertQueueAndStack {
@@ -75,8 +77,8 @@ public class ConvertQueueAndStack {
 
         /**
          * 倒数据：
-         * outStack为空才能倒数据；
-         * inStack倒数据时，必须一起性倒完！
+         * 原则一：outStack为空才能倒数据；
+         * 原则二：inStack倒数据时，必须一起性倒完！
          */
         private void inStackToOutStack() {
             if (outStack.empty()) {
@@ -134,6 +136,9 @@ public class ConvertQueueAndStack {
 
     }
 
+    /**
+     * 使用队列结构实现栈结构
+     */
     // 测试链接 : https://leetcode.cn/problems/implement-stack-using-queues/
     class MyStack {
 
@@ -143,10 +148,18 @@ public class ConvertQueueAndStack {
             queue = new LinkedList<Integer>();
         }
 
+        /**
+         * 数据入队列
+         *
+         * @param x
+         */
         // O(n)
         public void push(int x) {
+            // 当前队列数据个数
             int n = queue.size();
+            // 入队列
             queue.offer(x);
+            // 取出数据再进队列，实现先进后出的栈结构
             for (int i = 0; i < n; i++) {
                 queue.offer(queue.poll());
             }

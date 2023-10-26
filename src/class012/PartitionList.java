@@ -22,6 +22,41 @@ public class PartitionList {
     }
 
     static class Solution {
+
+        public static ListNode huaFen(ListNode head, int x) {
+            ListNode minHead = null, minTail = null;  // 小头 小尾
+            ListNode maxHead = null, maxTail = null;  // 大头 大尾
+            // 让额外空间复杂度为O(1)
+            ListNode nextNode = null;
+            while (head != null) {
+                nextNode = head.next;
+                head.next = null;
+                if (head.val < x) {
+                    if (minHead == null) {
+                        minHead = head;
+                    } else {
+                        minTail.next = head;
+                    }
+                    minTail = head;
+                } else {
+                    if (maxHead == null) {
+                        maxHead = head;
+                    } else {
+                        maxTail.next = head;
+                    }
+                    maxTail = head;
+                }
+                head = nextNode;
+            }
+            // 没有小于x的节点的情况
+            if (minHead == null) {
+                return maxHead;
+            }
+            minTail.next = maxHead;
+            return minHead;
+        }
+
+
         public static ListNode partition1(ListNode head, int x) {
 
             ListNode minHead = null, minTail = null;    // 小头 小尾

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * 二叉树三序遍历非递归实现
+ * 二叉树三序遍历的非递归实现
  */
 // 不用递归，用迭代的方式实现二叉树的三序遍历
 public class BinaryTreeTraversalIteration {
@@ -20,18 +20,42 @@ public class BinaryTreeTraversalIteration {
         }
     }
 
+    private static List<Integer> xianX(TreeNode head) {
+        List<Integer> ans = new ArrayList<>();
+        if (head != null) {
+            Stack<TreeNode> stack = new Stack<>();
+            // 头节点先压入栈
+            stack.push(head);
+            while (!stack.empty()) {
+                // 弹出栈顶节点
+                head = stack.pop();
+                System.out.print(head.val + " ");
+                ans.add(head.val);
+                // 先压入右子节点
+                if (head.right != null) {
+                    stack.push(head.right);
+                }
+                // 再压入左子节点
+                if (head.left != null) {
+                    stack.push(head.left);
+                }
+            }
+        }
+        return ans;
+    }
+
     /**
-     * 使用一个栈来实现二叉树的先序遍历
-     * 利用栈先进后出 后进先出的特性
+     * 使用一个栈来实现二叉树的先序遍历：利用栈先进后出 后进先出的特性
      * <p>
      * 思路：
-     * 栈中弹出节点后，先压入右子节点、再压入左子节点！
+     * 从栈中弹出节点后，先压入弹出节点的右子节点、再压入左子节点；
      *
      * @param head
      */
     private static void preventOrder(TreeNode head) {
         if (head != null) {
             Stack<TreeNode> stack = new Stack<>();
+            // 头节点先押入栈
             stack.push(head);
             while (!stack.empty()) {
                 head = stack.pop();
@@ -46,10 +70,33 @@ public class BinaryTreeTraversalIteration {
         }
     }
 
+
     /**
-     * 用栈来实现二叉树的中序遍历：
+     * 中序遍历
+     */
+    private static List<Integer> zhongX(TreeNode head) {
+        List<Integer> ans = new ArrayList<>();
+        if (head != null) {
+            Stack<TreeNode> stack = new Stack<>();
+            while (!stack.empty() || head != null) {
+                if (head != null) {
+                    stack.push(head);
+                    head = head.left;
+                } else {
+                    head = stack.pop();
+                    System.out.print(head.val + " ");
+                    ans.add(head.val);
+                    head = head.right;
+                }
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 用栈来实现二叉树的中序遍历：都可以三个节点的完全二叉树来理解
      * 思路：
-     * 1：树的左子节点一直入栈，直到为空
+     * 1：树的左边界子节点一直入栈，直到为空；
      * 2：弹出栈顶节点，达到弹出节点的右子节点，重复1步骤
      * 3：直到树为空或者栈为空
      *
@@ -238,6 +285,36 @@ public class BinaryTreeTraversalIteration {
                 }
             }
             while (!collect.isEmpty()) {
+                ans.add(collect.pop().val);
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 栈实现二叉树的后序遍历：可以用三节点的完全二叉树来想象
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        if (root != null) {
+            Stack<TreeNode> stack = new Stack<>();
+            Stack<TreeNode> collect = new Stack<>();
+
+            stack.push(root);
+            while (!stack.empty()) {
+                root = stack.pop();
+                collect.push(root);
+                if (root.left != null) {
+                    stack.push(root.left);
+                }
+                if (root.right != null) {
+                    stack.push(root.right);
+                }
+            }
+            while (!collect.empty()) {
                 ans.add(collect.pop().val);
             }
         }

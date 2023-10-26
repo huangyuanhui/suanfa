@@ -44,13 +44,19 @@ public class QueueStackAndCircularQueue {
 
     }
 
+
+    /**
+     * 用数组来实现单向队列（规定队列里的元素个数不会超过n）
+     */
     // 实际刷题时更常见的写法，常数时间好
     // 如果可以确定加入操作的总次数不超过n，那么可以用
     // 一般笔试、面试都会有一个明确数据量，所以这是最常用的方式
     public static class Queue2 {
 
         public int[] queue;
+        // 队列尾巴
         public int l;
+        // 队列头
         public int r;
 
         // 加入操作的总次数上限是多少，一定要明确
@@ -65,6 +71,11 @@ public class QueueStackAndCircularQueue {
             return l == r;
         }
 
+        /**
+         * 向队列中加入数
+         *
+         * @param num
+         */
         public void offer(int num) {
             queue[r++] = num;
         }
@@ -89,6 +100,7 @@ public class QueueStackAndCircularQueue {
         }
 
     }
+
 
     // 直接用java内部的实现
     // 其实就是动态数组，不过常数时间并不好
@@ -119,6 +131,10 @@ public class QueueStackAndCircularQueue {
 
     }
 
+
+    /**
+     * 使用数组实现栈结构（规定栈里的元素个数不会超过n）
+     */
     // 实际刷题时更常见的写法，常数时间好
     // 如果可以保证同时在栈里的元素个数不会超过n，那么可以用
     // 也就是发生弹出操作之后，空间可以复用
@@ -159,14 +175,15 @@ public class QueueStackAndCircularQueue {
 
 
     /**
-     * 循环队列
+     * 使用数组实现循环队列：核心：记录队列中元素个数的size
+     * 循环队列（注意是循环队列）
      */
     class CircularQueue {
-        // 队列左指针
+        // 队列左指针（出队列）
         private int leftPoint;
-        // 队列右指针
+        // 队列右指针（入队列）
         private int rightPoint;
-        // 队列当前元素
+        // 队列当前元素个数
         private int currentSize;
         // 队列长度
         private int length;
@@ -175,7 +192,7 @@ public class QueueStackAndCircularQueue {
         private int[] queue;
 
         public CircularQueue(int k) {
-            leftPoint = rightPoint = currentSize = 0;
+            // leftPoint = rightPoint = currentSize = 0;
             length = k;
             queue = new int[length];
         }
@@ -239,6 +256,7 @@ public class QueueStackAndCircularQueue {
         }
 
         public boolean isEmpty() {
+            // 都可以
             return leftPoint == rightPoint;
             // or
             // return currentSize == 0;
@@ -319,5 +337,6 @@ public class QueueStackAndCircularQueue {
         }
 
     }
+
 
 }
